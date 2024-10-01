@@ -1,0 +1,22 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+    var rootContent = UmbracoHelper.ContentAtRoot();
+    var settings = rootContent?.FirstOrDefault(x => x.ContentType.Alias == "settingsPage") ?? null;
+    var address = settings?.Value<string>("address") ?? "";   
+}
+
+<div class="top">
+    <div class="container">
+        <div class="address">
+            <p>@address</p>
+        </div>
+        <div class="social-media">
+            <a class="social-media-btn" href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="social-media-btn" href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+            <a class="social-media-btn" href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+    </div>   
+</div>

@@ -1,0 +1,66 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+	Layout = "mainLayout.cshtml";
+
+    var bannerImage = Model?.Value<IPublishedContent>("pageBannerImage")?.Url() ?? "";
+    var founderImage = Model?.Value<IPublishedContent>("founderImage")?.Url() ?? "";
+    var reviewImage = Model?.Value<IPublishedContent>("reviewImage")?.Url() ?? "";
+}
+
+<section id="page" style="background-image: url(@bannerImage);">
+    <div class="container">
+        <h3>@Model?.Value("pageHeadline")</h3>
+        @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    </div>
+</section>
+
+<section id="our-projects" class="light">
+    <div class="container">
+        <div class="left">
+            @{
+	            var selection = Umbraco.Content(Guid.Parse("94e01f4f-eff5-4e08-951e-f73cd6b85512"))
+                .ChildrenOfType("projectsItemTemplate")
+                .Where(x => x.IsVisible());
+            }
+
+            @foreach (var item in selection)
+	        {
+                var thumbnail = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+                var date = item?.Value<string>("date") ?? "";
+
+                <div class="project-card">
+                    <img src="@thumbnail" alt="">
+                    <div class="text">
+                        <h5>@item.Name()</h5>
+                        <p class="date"><i class="fa-solid fa-calendar-days"></i> @date</p>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Sed ut perspiciatis unde omnis iste natus error.</p>
+                        <a href="@item.Url()">Read more <span><i class="fa-solid fa-arrow-right"></i></span></a>
+                    </div>
+                </div>
+	        }
+        </div>
+        <div class="right">
+            <h5>Tags</h5>
+                <div class="tags">
+                    <p class="tag">Report</p>
+                    <p class="tag">Business plan</p>
+                    <p class="tag">Insight</p>
+                    <p class="tag">Business</p>
+                    <p class="tag">App</p>
+                    <p class="tag">Project</p>
+                    <p class="tag">Finance</p>
+                    <p class="tag">Pricing</p>
+                </div>
+                <form action="">
+                    <h5>How can we help you?</h5>
+                    <p>Online support 24/7, we are here to help you</p>
+                    <input type="text" placeholder="Email address">
+                    <i class="fa-regular fa-envelope"></i>
+                </form>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("partials/static/contactInfo.cshtml")

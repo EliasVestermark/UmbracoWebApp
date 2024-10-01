@@ -1,0 +1,73 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+	Layout = "mainLayout.cshtml";
+
+    var bannerImage = Model?.Value<IPublishedContent>("pageBannerImage")?.Url() ?? "";
+    var aboutImage = Umbraco.Media("ae8d4afc-d3f8-46b6-b775-17c4a2d18573")?.Url() ?? "";
+
+    bool.TryParse(ViewData["error_name"]?.ToString()!, out bool error_name);
+    bool.TryParse(ViewData["error_email"]?.ToString()!, out bool error_email);
+    bool.TryParse(ViewData["error_question"]?.ToString()!, out bool error_question);
+}
+
+<section id="page" style="background-image: url(@bannerImage);">
+    <div class="container">
+        <h3>@Model?.Value("title")</h3>
+        @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    </div>
+</section>
+
+<section id="risk">
+    <div class="container">
+        <div class="main">
+            <div class="left">
+                <h5>About us</h5>
+                <img src="@aboutImage" alt="meeting">
+                <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non </p>
+                <form action="">
+                    <h5>How can we help you?</h5>
+                    <p>Online support 24/7, we are here to help you</p>
+                    <input type="text" placeholder="Email address">
+                    <i class="fa-regular fa-envelope"></i>
+                </form>
+            </div>
+            <div class="right">
+                @Model.Value("text")
+            </div>
+        </div>
+
+        @if (ViewData["success"] == null)
+        {
+            @using (Html.BeginUmbracoForm("HandleSubmit", "ServiceSurface", FormMethod.Post))
+            {
+                <div class="form">
+                    <h5>Have a question?</h5>
+                    <div class="two-inputs">
+                        <div class="input-and-error">
+                            <input name="name" id="name" type="text" placeholder="Name" value="@ViewData["name"]">
+                            <span class="error-message @((error_name) ? "active" : "")">Enter a valid name</span>
+                        </div>
+                        <div class="input-and-error">
+                            <input name="email" id="email" type="text" placeholder="Email" value="@ViewData["email"]">
+                            <span class="error-message @((error_email) ? "active" : "")">Enter a valid email</span>
+                        </div>
+                    </div>
+                    <textarea name="question" id="question" placeholder="Question" value="@ViewData["question"]"></textarea>
+                    <span class="error-message @((error_question) ? "active" : "")">Enter a question</span>
+                    <button type="submit" class="btn-dark">Submit</button>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 style="text-align: center;">@ViewData["success"]</h3>
+        }
+
+          
+    </div>
+</section>
+
+
+@await Html.PartialAsync("partials/static/contactInfo.cshtml")

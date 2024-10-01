@@ -1,0 +1,53 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+    var rootContent = UmbracoHelper.ContentAtRoot();
+    var settings = rootContent?.FirstOrDefault(x => x.ContentType.Alias == "settingsPage") ?? null;
+    
+    var image1 = settings?.Value<IPublishedContent>("contactInfoImage")?.Url() ?? "";  
+    var image2 = settings?.Value<IPublishedContent>("secondContactImage")?.Url() ?? "";
+
+    var headline = settings?.Value<string>("contactInfoHeadline") ?? "";
+    var addressTitle = settings?.Value<string>("addressTitle") ?? "";
+    var address = settings?.Value<string>("contactAddress") ?? "";
+    var emailTitle = settings?.Value<string>("phoneTitle") ?? "";
+    var email = settings?.Value<string>("contactPhoneNumber") ?? "";
+    var phoneTitle = settings?.Value<string>("emailTitle") ?? "";
+    var phone = settings?.Value<string>("contactEmail") ?? "";
+    
+}
+
+<section id="let-us-know">
+    <div class="container">
+        <div class="images">
+            <img src="@image2" alt="shapes">
+            <img src="@image1" alt="man">
+        </div>
+        <div class="text">
+            <h3>@headline</h3>
+            <div class="group">
+                <i class="fa-regular fa-location-dot"></i>
+                <div>
+                    <p class="title">@addressTitle</p>
+                    <p>@address</p>
+                </div>
+            </div>
+            <div class="group">
+                <i class="fa-regular fa-phone"></i>
+                <div>
+                    <p class="title">@phoneTitle</p>
+                    <p>@phone</p>
+                </div>
+            </div>
+            <div class="group">
+                <i class="fa-regular fa-envelope"></i>
+                <div>
+                    <p class="title">@emailTitle</p>
+                    <p>@email</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

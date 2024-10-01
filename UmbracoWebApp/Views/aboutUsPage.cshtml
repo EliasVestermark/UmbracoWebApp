@@ -1,0 +1,102 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+	Layout = "mainLayout.cshtml";
+
+    var bannerImage = Model?.Value<IPublishedContent>("pageBannerImage")?.Url() ?? "";
+    var founderImage = Model?.Value<IPublishedContent>("founderImage")?.Url() ?? "";
+    var reviewImage = Model?.Value<IPublishedContent>("reviewImage")?.Url() ?? "";
+
+    var expert1 = Model?.Value<IPublishedContent>("expertImage1")?.Url() ?? "";
+    var expert2 = Model?.Value<IPublishedContent>("expertImage2")?.Url() ?? "";
+    var expert3 = Model?.Value<IPublishedContent>("expertImage3")?.Url() ?? "";
+    var expert4 = Model?.Value<IPublishedContent>("expertImage4")?.Url() ?? "";
+    var expert5 = Model?.Value<IPublishedContent>("expertImage5")?.Url() ?? "";
+    var expert6 = Model?.Value<IPublishedContent>("expertImage6")?.Url() ?? "";
+    var expert7 = Model?.Value<IPublishedContent>("expertImage7")?.Url() ?? "";
+}
+
+<section id="page" style="background-image: url(@bannerImage);">
+    <div class="container">
+        <h3>@Model?.Value("pageHeadline")</h3>
+        @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    </div>
+</section>
+
+<section id="founder">
+    <div class="container">
+        <div class="image-and-text">
+            <img src="@founderImage" alt="founder">
+            <p>@Model?.Value("founderName")</p>
+        </div>
+        <div class="text">
+            <p class="quote">@Model?.Value("founderQuote")</p>
+            <p>@Model?.Value("founderText")</p>
+        </div>
+    </div>
+</section>
+
+<section id="review">
+    <div class="container">
+        <div class="text">
+            <h6>@Model?.Value("reviewTitle")</h6>
+            <h3>@Model?.Value("reviewHeadline")</h3>
+            <p class="quote">@Model?.Value("reviewText")</p>
+            <p class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+            <p class="name">@Model?.Value("reviewName")</p>
+            <p class="company">@Model?.Value("reviewCompany")</p>
+        </div>
+        <img src="@reviewImage" alt="Kevin Gardner">
+    </div>
+</section>
+
+<section id="experts">
+    <div class="container">
+        <div class="titles">
+            <h6>Our expert</h6>
+            <h3>A team of professionals with years of experience</h3>
+        </div>
+        <div class="large-cards">
+            <div class="expert-card">
+                <img src="@expert1" alt="expert">
+                <h5>@Model?.Value("expertName1")</h5>
+                <p>@Model?.Value("expertRole1")</p>
+            </div>
+            <div class="expert-card">
+                <img src="@expert2" alt="expert">
+                <h5>@Model?.Value("expertName2")</h5>
+                <p>@Model?.Value("expertRole2")</p>
+            </div>
+            <div class="expert-card">
+                <img src="@expert3" alt="expert">
+                <h5>@Model?.Value("expertName3")</h5>
+                <p>@Model?.Value("expertRole3")</p>
+            </div>
+        </div>
+        <div class="small-cards">
+            <div class="expert-card">
+                <img src="@expert4" alt="expert">
+                <h5>@Model?.Value("expertName4")</h5>
+                <p>@Model?.Value("expertRole4")</p>
+            </div>
+            <div class="expert-card">
+                <img src="@expert5" alt="expert">
+                <h5>@Model?.Value("expertName5")</h5>
+                <p>@Model?.Value("expertRole5")</p>
+            </div>
+            <div class="expert-card">
+                <img src="@expert6" alt="expert">
+                <h5>@Model?.Value("expertName6")</h5>
+                <p>@Model?.Value("expertRole6")</p>
+            </div>
+            <div class="expert-card">
+                <img src="@expert7" alt="expert">
+                <h5>@Model?.Value("expertName7")</h5>
+                <p>@Model?.Value("expertRole7")</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("partials/static/contactInfo.cshtml")

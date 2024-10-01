@@ -1,0 +1,45 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+	Layout = "mainLayout.cshtml";
+
+    var bannerImage = Model?.Value<IPublishedContent>("pageBannerImage")?.Url() ?? "";
+    var founderImage = Model?.Value<IPublishedContent>("founderImage")?.Url() ?? "";
+}
+
+<section id="page" style="background-image: url(@bannerImage);">
+    <div class="container">
+        <h3>@Model?.Value("pageHeadline")</h3>
+        @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    </div>
+</section>
+
+<section id="services" class="light">
+    <div class="container">
+        <div class="titles">
+            <h3>We Provide The Solutions To Grow Your Business Faster</h3>
+        </div>
+        <div class="cards">
+            @{
+	            var selection = Umbraco.Content(Guid.Parse("487a546e-e31c-4e61-8a64-886c11bcd6d7"))
+                .ChildrenOfType("serviceItemTemplate")
+                .Where(x => x.IsVisible());
+            }
+
+            @foreach (var item in selection)
+	        {
+                var thumbnail = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+
+                <a href="@item.Url()" class="service-card">
+                    <h5>@item.Name()</h5>
+                    <img src="@thumbnail" alt="">
+                    <p>Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non </p>
+                </a>
+	        }
+    
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("partials/static/contactInfo.cshtml")

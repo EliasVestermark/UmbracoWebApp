@@ -1,0 +1,86 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "mainLayout.cshtml";
+
+    var bannerImage = Model?.Value<IPublishedContent>("pageBannerImage")?.Url() ?? "";
+    var backgroundImage = Model?.Value<IPublishedContent>("formBackgroundImage")?.Url() ?? "";
+
+    var partner1 = Model?.Value<IPublishedContent>("partner1")?.Url() ?? "";
+    var partner2 = Model?.Value<IPublishedContent>("partner2")?.Url() ?? "";
+    var partner3 = Model?.Value<IPublishedContent>("partner3")?.Url() ?? "";
+    var partner4 = Model?.Value<IPublishedContent>("partner4")?.Url() ?? "";
+    var partner5 = Model?.Value<IPublishedContent>("partner5")?.Url() ?? "";
+    var partner6 = Model?.Value<IPublishedContent>("partner6")?.Url() ?? "";
+
+    bool.TryParse(ViewData["error_name"]?.ToString()!, out bool error_name);
+    bool.TryParse(ViewData["error_email"]?.ToString()!, out bool error_email);
+    bool.TryParse(ViewData["error_phone"]?.ToString()!, out bool error_phone);
+}
+
+<section id="page" style="background-image: url(@bannerImage);">
+    <div class="container">
+        <h3>@Model?.Value("pageHeadline")</h3>
+        @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    </div>
+</section>
+
+@await Html.PartialAsync("partials/static/contactInfo.cshtml")
+
+<section id="contact" style="background-image: url(@backgroundImage);">
+    <div class="container">
+        <div class="titles-and-form">
+            <h6>@Model?.Value("formTitle")</h6>
+            <h3>@Model?.Value("formHeadline")</h3>
+            <p>@Model?.Value("formText")</p>
+
+            @if (ViewData["success"] == null)
+            {
+                @using (Html.BeginUmbracoForm("HandleSubmit", "CallbackSurface", FormMethod.Post))
+                {
+                    <div class="form">
+                        <div class="two-inputs">
+                            <div class="group">
+                                <input name="name" id="name" type="text" placeholder="Name" value="@ViewData["name"]">
+                                <span class="error-message @((error_name) ? "active": "")">Enter a valid name</span>
+                            </div>
+                            <div class="group">
+                                <input name="phone" id="phone" type="text" placeholder="Phone" value="@ViewData["phone"]">
+                                <span class="error-message @((error_phone) ? "active": "")">Enter a valid phone number</span>
+                            </div>
+                        </div>
+                        <div class="two-inputs">
+                            <div class="group">
+                                <input name="email" id="email" type="text" placeholder="Email address" value="@ViewData["email"]">
+                                <span class="error-message @((error_email) ? "active": "")">Enter a valid email</span>
+                            </div>
+                            <div class="group">
+                                <select name="service" id="service">
+                                    <option value="finance">Finance</option>
+                                    <option value="consulting">Consulting</option>
+                                    <option value="statistics">Statistics</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-dark">@Model?.Value("formButtonText")</button>
+                    </div> 
+                }
+            }
+            else
+            {
+                <h3 style="text-align: center;">@ViewData["success"]</h3>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="partners">
+    <div class="container contact">
+        <img src="@partner1" alt="partner logo">
+        <img src="@partner2" alt="partner logo">
+        <img src="@partner3" alt="partner logo">
+        <img src="@partner4" alt="partner logo">
+        <img src="@partner5" alt="partner logo">
+        <img src="@partner6" alt="partner logo">
+    </div>
+</section>

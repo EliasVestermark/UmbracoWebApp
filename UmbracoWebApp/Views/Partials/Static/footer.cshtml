@@ -1,0 +1,14 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+    var rootContent = UmbracoHelper.ContentAtRoot();
+    var settings = rootContent?.FirstOrDefault(x => x.ContentType.Alias == "settingsPage") ?? null;
+    var copyright = settings?.Value<string>("copyright") ?? "";
+    var copyrightTheme = settings?.Value<string>("copyrightTheme") ?? "";
+}
+
+<div class="container">
+    <p>@copyright <span>@copyrightTheme</span></p>
+</div>
